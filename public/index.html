@@ -1,0 +1,59 @@
+<html>
+  <head>
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+
+			var socket = io.connect();
+
+			socket.on('connect', function() {
+				console.log("Connected");
+			});
+
+			function sendit(evt, message) {
+				socket.emit(evt, message);
+			}
+
+			// When the window loads
+			window.addEventListener('load', function() {
+				console.log("Window Loaded");
+			
+				// Track Whatever you would like
+				
+				// Mousemove
+				document.addEventListener('mousemove', function(e) {
+					//console.log(e);
+					sendit('event', {'event': 'mousemove', x: e.clientX, y: e.clientY});
+				});
+
+				// Click
+				document.addEventListener('click', function(e) {
+					//console.log(e);
+					sendit('event', {'event': 'click', x: e.clientX, y: e.clientY});
+				});
+				
+				// Text
+				document.addEventListener('keypress', function(e) {
+					//console.log(e);
+					sendit('event', {'event': 'keypress', 'key': e.key});
+				});
+				
+				// Anything else:
+				//https://www.w3schools.com/jsref/dom_obj_event.asp
+			});
+
+    </script>
+  </head>
+  <body>
+  <p>On January 26, 2014, the German broadcaster Norddeutscher Rundfunk asked Edward Snowden in its TV interview: "What could you do if you would use XKeyscore?" and he answered:[1]</p>
+
+	<p>You could read anyone's email in the world, anybody you've got an email address for. Any website: You can watch traffic to and from it. Any computer that an individual sits at: You can watch it. Any laptop that you're tracking: you can follow it as it moves from place to place throughout the world. It's a one-stop-shop for access to the NSA's information.</p>
+
+<p>.... You can tag individuals ... Let's say you work at a major German corporation and I want access to that network, I can track your username on a website on a form somewhere, I can track your real name, I can track associations with your friends and I can build what's called a fingerprint, which is network activity unique to you, which means anywhere you go in the world, anywhere you try to sort of hide your online presence, your identity.</p>
+
+<p>According to The Guardian's Glenn Greenwald, low-level NSA analysts can, via systems like XKeyscore, "listen to whatever emails they want, whatever telephone calls, browsing histories, Microsoft Word documents. And it's all done with no need to go to a court, with no need to even get supervisor approval on the part of the analyst."[8]</p>
+
+<p>He added that the NSA's databank of collected communications allows its analysts to listen "to the calls or read the emails of everything that the NSA has stored, or look at the browsing histories or Google search terms that you've entered, and it also alerts them to any further activity that people connected to that email address or that IP address do in the future".[8]</p>
+	<input type="text" id="thetext" value="What's your name?">
+	<input type="button" id="thebutton" value="Click Me">
+  </body>
+</html>

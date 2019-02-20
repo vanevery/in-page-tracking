@@ -1,0 +1,59 @@
+<html>
+  <head>
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+
+			var socket = io.connect();
+
+			socket.on('connect', function() {
+				console.log("Connected");
+				socket.emit('watch',{});
+			});
+			
+			function getElement(data) {
+				var element = null;		
+				if (document.getElementById(data.socket_id)) {
+					element = document.getElementById(data.socket_id);
+				} else {
+					element = document.createElement('DIV');
+					element.id = data.socket_id;
+					element.style.backgroundColor = "red";
+					element.style.width = "10px";
+					element.style.height = "10px";
+					document.body.appendChild(element);
+					element.style.position = "absolute";
+				}
+				return element;			
+			}
+
+			// When the window loads
+			window.addEventListener('load', function() {
+				console.log("Window Loaded");
+
+				socket.on('event', function(data) {
+					console.log(data);
+					element = getElement(data);	
+					console.log(element);		
+
+					if (data.event == "mousemove") {					
+						element.style.top = data.y;
+						element.style.left = data.x;
+					} else if (data.event == "click") {
+						element.style.width = "20px";
+						element.style.height = "20px";
+						setTimeout(function() {
+							element.style.width = "10px";
+							element.style.height = "10px";
+						}, 1000);						
+					} else if (data.event == "keypress") {
+						element.innerHTML = element.innerHTML + data.key;
+					}
+				});
+			});
+
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
